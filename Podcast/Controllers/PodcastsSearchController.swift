@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PodcastsSearchController: UITableViewController{
+class PodcastsSearchController: UITableViewController, UISearchBarDelegate{
     
     let podcasts = [
         Podcast(name: "Eternal Atake", authorName: "SpaceJumper69"),
@@ -18,12 +18,30 @@ class PodcastsSearchController: UITableViewController{
     
     let cellId = "cellID"
     
+    let searchController = UISearchController(searchResultsController: nil)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .white
+        setupSearchBar()
+        setupTableView()
+    }
+    
+    fileprivate func setupSearchBar(){
+        navigationItem.searchController = searchController
+        navigationItem.hidesBackButton = false
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.delegate = self
         
-        tableView.register( UITableViewCell.self , forCellReuseIdentifier: cellId)
+    }
+    
+    fileprivate func setupTableView(){
+          tableView.register( UITableViewCell.self , forCellReuseIdentifier: cellId)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(searchText)
+        //impletment alamofire to search Itunes api
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
